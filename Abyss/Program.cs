@@ -22,6 +22,8 @@ namespace Abyss     //'namespace Abyss' - Declares a container for your code, kn
         {
             bool gameRunning = true; // This flag controls whether the game keeps running
 
+            Console.WriteLine("Welcome to the Abyss... Please state your name...");
+            string username = Console.ReadLine()!;
             
             while (gameRunning) //Main Menu Loop
             {
@@ -43,7 +45,7 @@ namespace Abyss     //'namespace Abyss' - Declares a container for your code, kn
                 Console.WriteLine("2. Stars...");
                 Console.WriteLine("3. Leave Abyss...");
                 Console.WriteLine();
-                Console.WriteLine("Choose! A voice screams");
+                Console.WriteLine($"{username},Choose!");
                 //Listed are your options to choose with the number keys and enter
 
                 string choice = Console.ReadLine()!;
