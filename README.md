@@ -1,11 +1,8 @@
 # Abyss
-Overview
 Welcome to Abyss, a chilling text-based horror adventure game. As you step into the darkness, you'll navigate through eerie environments, make spine-tingling choices, and uncover twisted stories in a world of nightmares. Your progression is saved, and your username will follow you throughout your journey into the unknown.
 
 ## Features:
 Text-Based Horror/Adventure: Dive deep into a world filled with suspense, mystery, and horror.
-
-Persistent Username: Choose your name at the start, and it will follow you throughout the game.
 
 Choice-Based Gameplay: Navigate through the abyss with simple number keys to make life-or-death decisions.
 
@@ -19,15 +16,9 @@ You will be loaded into a console window where the game will describe your envir
 ## How to Play:
 Start the game by launching the executable.
 
-Follow the text prompts and use number keys to make decisions:
+Follow the text prompts and use number keys to make decisions.
 
-Press 1 to make the first choice.
-
-Press 2 to make the second choice, and so on.
-
-Your username will be displayed at the start and carry throughout the game.
-
-Enjoy the creepy atmosphere and unravel the mysteries hidden in the abyss.
+Your username will be displayed at the start and carry throughout the game. 
 
 ### Notes:
 This game is work in progress—there's plenty more to be added, so feel free to come back for updates!
