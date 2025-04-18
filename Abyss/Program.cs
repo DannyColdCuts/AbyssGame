@@ -45,7 +45,7 @@ namespace Abyss     //'namespace Abyss' - Declares a container for your code, kn
                 Console.WriteLine("2. Stars...");
                 Console.WriteLine("3. Leave Abyss...");
                 Console.WriteLine();
-                Console.WriteLine($"{username},Choose!");
+                Console.WriteLine("Choose!");
                 //Listed are your options to choose with the number keys and enter
 
                 string choice = Console.ReadLine()!;
