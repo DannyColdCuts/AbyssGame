@@ -11,24 +11,63 @@ namespace Abyss     //'namespace Abyss' - Declares a container for your code, kn
     class Program   //'class Program' - This defines a class called 'Program'
                     // A class is a blueprint for creating objects (in this case, your entire program).
     {               // The class contains methods and properties that define the behavior of the object
+      
+            //'static void Main(string[] args)' - Entry point of the program (the first method that runs when you start).
+            // - 'static' means that this method belongs to the class itself, not an instance of the class.
+            // So you dont need to create an object of 'Program' to run the main method, its called directly
+            // - 'void' means that this method doesn't return any value. It's just performing actions, like displaying text or running logic.
+            // - 'Main' is the name of the method that the program will start executing from.
+            // - 'string[] args' is an array of arguments that the program can recieve from the command line when it is launched
+        static void SaveGame(string username, string currentLevel)
+        {
+            File.WriteAllText("savefile.txt", $"{username}\n{currentLevel}"); // This will create a file called savefile.txt and write the username and current level to it
+        }
 
-        //'static void Main(string[] args)' - Entry point of the program (the first method that runs when you start).
-        // - 'static' means that this method belongs to the class itself, not an instance of the class.
-        // So you dont need to create an object of 'Program' to run the main method, its called directly
-        // - 'void' means that this method doesn't return any value. It's just performing actions, like displaying text or running logic.
-        // - 'Main' is the name of the method that the program will start executing from.
-        // - 'string[] args' is an array of arguments that the program can recieve from the command line when it is launched
+        static (string username, string level)? LoadGame()
+        {
+            if (!File.Exists("savefile.txt"))
+                return null;
+
+            string[] lines = File.ReadAllLines("savefile.txt");
+            if (lines.Length >= 2)
+                return (lines[0], lines[1]);
+
+            return null;
+        }
+
         static void Main(string[] args) // Main method body will go here. This is where your game logic begins.
         {
-            bool gameRunning = true; // This flag controls whether the game keeps running
+            string username;
+            string currentLevel = "main";
 
-            Console.WriteLine("Welcome to the Abyss... Please state your name...");
-            string username = Console.ReadLine()!;
-            
+            var save = LoadGame();
+            if (save != null)
+            {
+                Console.WriteLine("Saved game found. Load it? (Y/N)");
+                string? rawInput = Console.ReadLine();
+                string loadChoice = rawInput?.ToLower() ?? "n";
+                if (loadChoice == "y")
+                {
+                    username = save.Value.username;
+                    currentLevel = save.Value.level;
+                }
+                else
+                {
+                    Console.WriteLine("Enter your name:");
+                    username = Console.ReadLine()!;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Enter your name:");
+                username = Console.ReadLine()!;
+            }
+
+            bool gameRunning = true; // This flag controls whether the game keeps running
             while (gameRunning) //Main Menu Loop
             {
+                //Game Introduction Main menu
                 Console.Clear(); //Clears the screen every loop iteration for a fresh look. Less text all over the screen when levels change
-                //Game Introduction
                 Console.WriteLine("Welcome to the Abyss");
                 Console.WriteLine();
                 Console.WriteLine("What kind of a world were you used to?");
@@ -45,7 +84,7 @@ namespace Abyss     //'namespace Abyss' - Declares a container for your code, kn
                 Console.WriteLine("2. Stars...");
                 Console.WriteLine("3. Leave Abyss...");
                 Console.WriteLine();
-                Console.WriteLine("Choose!");
+                Console.WriteLine($"{username}, Choose!");
                 //Listed are your options to choose with the number keys and enter
 
                 string choice = Console.ReadLine()!;
@@ -55,7 +94,7 @@ namespace Abyss     //'namespace Abyss' - Declares a container for your code, kn
                     case "1": //If the player chooses PitchBlack
 
                         Console.Clear();
-                        PitchBlack(); // Calls the Pitch Black method (new "level")
+                        PitchBlack(username, currentLevel); // Calls the Pitch Black method (new "level")
                         break;
                                             
                     case "2": // If the player chooses path 2 EyeSparkles
@@ -67,6 +106,7 @@ namespace Abyss     //'namespace Abyss' - Declares a container for your code, kn
                     case "3": //If the player chooses to quit the game
 
                         Console.Clear();
+                        SaveGame(username, currentLevel);
                         gameRunning = false; //End game loop
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("You are leaving the dream world from the real world. They are still being tormented. Return to attempt to help");
@@ -82,7 +122,7 @@ namespace Abyss     //'namespace Abyss' - Declares a container for your code, kn
             }
         }
 
-        static void PitchBlack() // Method for the Pitch Black Level
+        static void PitchBlack(string username, string currentLevel) // Method for the Pitch Black Level
         {
             bool inPitchBlack = true; //PitchBlack gameloop start - if false none of the level conditions apply (i.e. - return to other level and let that loop take over)
 
@@ -129,6 +169,7 @@ namespace Abyss     //'namespace Abyss' - Declares a container for your code, kn
                     case "3": // cleaner if/else statement (if the user presses #3 then send that data to console.ReadLine() as permissable data entry
                         Console.Clear();
                         Console.ForegroundColor = ConsoleColor.Red;
+                        SaveGame(username, currentLevel);
                         Console.WriteLine("You back away slowly, the abyss swallows the coins once more...");
                         inPitchBlack = false; // Exit this level
                         Console.ResetColor();
