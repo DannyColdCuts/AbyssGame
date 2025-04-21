@@ -37,16 +37,20 @@ namespace Abyss     //'namespace Abyss' - Declares a container for your code, kn
 
         static void Main(string[] args) // Main method body will go here. This is where your game logic begins.
         {
+            // 2 string statements start declaring the variables for the username and levels
+            // 'username' will store the players name.
+            // 'currentLevel' represents the current part of the game (defaults to "main").
             string username;
             string currentLevel = "main";
 
-            var save = LoadGame();
-            if (save != null)
+            var save = LoadGame(); // Attempt to load any previously saved game data.
+            if (save != null) //Check if the game found an existing save file.
             {
-                Console.WriteLine("Saved game found. Load it? (Y/N)");
+                Console.WriteLine("Saved game found. Load it? (Y/N)"); //Save found successfully, write this message
                 string? rawInput = Console.ReadLine();
                 string loadChoice = rawInput?.ToLower() ?? "n";
-                if (loadChoice == "y")
+
+                if (loadChoice == "y") //if Y is press for the value
                 {
                     username = save.Value.username;
                     currentLevel = save.Value.level;
@@ -59,6 +63,7 @@ namespace Abyss     //'namespace Abyss' - Declares a container for your code, kn
             }
             else
             {
+                // No save file found; start a new game
                 Console.WriteLine("Enter your name:");
                 username = Console.ReadLine()!;
             }
