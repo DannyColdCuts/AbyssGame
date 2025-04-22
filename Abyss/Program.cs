@@ -54,6 +54,22 @@ namespace Abyss     //'namespace Abyss' - Declares a container for your code, kn
                 {
                     username = save.Value.username;
                     currentLevel = save.Value.level;
+
+                    switch (currentLevel)
+                    {
+                        case "PitchBlack":
+                            PitchBlack(username, currentLevel);
+                            break;
+
+                        case "EyeSparkles":
+                            EyeSparkles();
+                            break;
+
+                        default:
+                            // Just fall through to menu if unknown or "main"
+                            break;
+                    }
+
                 }
                 else
                 {
@@ -99,12 +115,16 @@ namespace Abyss     //'namespace Abyss' - Declares a container for your code, kn
                     case "1": //If the player chooses PitchBlack
 
                         Console.Clear();
+                        currentLevel = "PitchBlack";
+                        Console.ForegroundColor = ConsoleColor.Blue;
                         PitchBlack(username, currentLevel); // Calls the Pitch Black method (new "level")
                         break;
                                             
                     case "2": // If the player chooses path 2 EyeSparkles
 
                         Console.Clear();
+                        currentLevel = "EyeSparkles";
+                        Console.ForegroundColor = ConsoleColor.Green;
                         EyeSparkles(); // Calls the EyeSparkles method (new "level")
                         break;
                                             
@@ -196,7 +216,6 @@ namespace Abyss     //'namespace Abyss' - Declares a container for your code, kn
         static void EyeSparkles() //Method for the Seeing Stars Level
         {
             Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine("You saw light just a second ago. You're brain eagerly is trying to put the image back. You only see dizzy stars."); // Story element for EyeSparkles
             Console.WriteLine("Any key = Go back");
             Console.ReadKey(); // Wait for a user to press a key before returning
