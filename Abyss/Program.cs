@@ -44,17 +44,19 @@ namespace Abyss     //'namespace Abyss' - Declares a container for your code, kn
             string currentLevel = "main";
 
             var save = LoadGame(); // Attempt to load any previously saved game data.
-            if (save != null) //Check if the game found an existing save file.
+            if (save != null) //If save file was successfully loaded
             {
                 Console.WriteLine("Saved game found. Load it? (Y/N)"); //Save found successfully, write this message
                 string? rawInput = Console.ReadLine();
                 string loadChoice = rawInput?.ToLower() ?? "n";
 
-                if (loadChoice == "y") //if Y is press for the value
+                if (loadChoice == "y") //if Y is pressed for the value
                 {
+                    // Populate the username and level from the saved data
                     username = save.Value.username;
                     currentLevel = save.Value.level;
 
+                    // Jump directly into the saved level
                     switch (currentLevel)
                     {
                         case "PitchBlack":
@@ -62,7 +64,7 @@ namespace Abyss     //'namespace Abyss' - Declares a container for your code, kn
                             break;
 
                         case "EyeSparkles":
-                            EyeSparkles();
+                            EyeSparkles(username, currentLevel);
                             break;
 
                         default:
@@ -71,13 +73,13 @@ namespace Abyss     //'namespace Abyss' - Declares a container for your code, kn
                     }
 
                 }
-                else
+                else //if the player declines to load, start a new game
                 {
                     Console.WriteLine("Enter your name:");
                     username = Console.ReadLine()!;
                 }
             }
-            else
+            else // No save file found; start fresh
             {
                 // No save file found; start a new game
                 Console.WriteLine("Enter your name:");
@@ -125,7 +127,7 @@ namespace Abyss     //'namespace Abyss' - Declares a container for your code, kn
                         Console.Clear();
                         currentLevel = "EyeSparkles";
                         Console.ForegroundColor = ConsoleColor.Green;
-                        EyeSparkles(); // Calls the EyeSparkles method (new "level")
+                        EyeSparkles(username, currentLevel); // Calls the EyeSparkles method (new "level")
                         break;
                                             
                     case "3": //If the player chooses to quit the game
@@ -213,13 +215,14 @@ namespace Abyss     //'namespace Abyss' - Declares a container for your code, kn
             }
         }
                 
-        static void EyeSparkles() //Method for the Seeing Stars Level
+        static void EyeSparkles(string username, string currentLevel) //Method for the Seeing Stars Level
         {
             Console.Clear();
             Console.WriteLine("You saw light just a second ago. You're brain eagerly is trying to put the image back. You only see dizzy stars."); // Story element for EyeSparkles
-            Console.WriteLine("Any key = Go back");
+            Console.WriteLine("");
             Console.ReadKey(); // Wait for a user to press a key before returning
             Console.ResetColor();
+            SaveGame(username, currentLevel);
 
 
 
